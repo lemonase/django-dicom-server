@@ -9,5 +9,5 @@ class ServerInfo(models.Model):
         return self.friendly_name
 
     friendly_name = models.CharField(max_length=30)
-    ae_title = models.CharField(max_length=30)
-    port_num = models.IntegerField()
+    AE_Title = models.CharField(max_length=30)
+    port = models.IntegerField()
