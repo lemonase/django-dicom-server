@@ -7,12 +7,7 @@ from .models import ServerInfo
 
 
 def index(request):
-    return HttpResponse("(/) HTTP Response 200!")
-
-
-def home(request):
     all_servers = ServerInfo.objects.all()
-    output = ""
-    for s in all_servers:
-        output += str(s) + "<br>"
-    return HttpResponse(output)
+
+    server_list = {'server_list': all_servers}
+    return render(request, 'home/index.html', server_list)
