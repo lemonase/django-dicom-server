@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import ServerInfo
+from .models import DicomServer
 
 
 class ServerInfoAdmin(admin.ModelAdmin):
-    list_display = ('friendly_name', 'AE_Title', 'port')
+    list_display = ('hostname', 'ae_title', 'port')
 
 
-admin.site.register(ServerInfo, ServerInfoAdmin)
+admin.site.register(DicomServer, ServerInfoAdmin)
