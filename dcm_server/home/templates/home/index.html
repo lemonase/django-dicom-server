@@ -1,10 +1,18 @@
+<h2>Server Config List</h2>
 <table>
+  {% if server in server_list %}
   <th>
-    <tr>Server List</tr>
+    <tr>
+      Server Index
+    </tr>
   </th>
   <tr>
     {% for server in server_list %}
-      <li> {{ server }} </li>
+    <li>{{ server }}</li>
     {% endfor %}
   </tr>
+  {% else %}
+  <p style="background-color: red">No DICOM Server Configurations</p>
+  <button>Click Here to Configure DICOM Settings</button>
+  {% endif %}
 </table>
