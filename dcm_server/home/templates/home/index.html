@@ -1,16 +1,18 @@
-<<<<<<< HEAD {% extends "base.html" %} {% block title %} DICOM Server Index {% endblock %} {% block content %} <h2>
-  Server List</h2>
-  <hr>
+{% extends "base.html" %}
+{% block title %} DICOM Server Index {% endblock %}
+{% block content %}
+<a href="/admin/home/dicomserver">
+  <button class="btn btn-primary">Click Here to Add/Configure DICOM Settings</button>
+</a>
 
-  <ul class="list-none hover:list-disc">
-    {% if server in server_list %}
-    {% for server in server_list %}
-    <li>{{ server }}</li>
-    {% endfor %}
-    {% else %}
-    <p style="background-color: red">No DICOM Server Configurations</p>
-    <button>Click Here to Configure DICOM Settings</button>
-    {% endif %}
-  </ul>
+<hr>
+<h2>
+  Server List
+</h2>
+<ul>
+  {% for server in server_list %}
+  <li><a href="/admin/home/dicomserver/{{server}}"></a>{{ server }}</li>
+  {% endfor %}
+</ul>
 
-  {% endblock %}
+{% endblock %}
