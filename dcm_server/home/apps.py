@@ -2,7 +2,6 @@ from django.apps import AppConfig
 import os
 import logging
 
-# from .models import DicomServer
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +18,12 @@ class HomeConfig(AppConfig):
         os.environ["HOME_RUN_ONCE"] = "True"
 
         print("Starting DICOM Store SCP server")
-        dicom_server = DicomServerRunner()
-        dicom_server.run_server()
+
+        from .models import DicomServer
+        for server in DicomServer.objects.all():
+            dicom_server = DicomServerRunner(
+                server_name=server.hostname, port=server.port, ae_title=server.ae_title)
+            dicom_server.run_server()
 
 
 class DicomServerRunner:
@@ -60,7 +63,7 @@ class DicomServerRunner:
             ae.add_supported_context(context.abstract_syntax, transfer_syntax)
 
         print(
-            f"DICOM Server has been started at {self.addr}:{self.port} with AE Title: {self.ae_title}")
+            f"{self.server_name} has been started at {self.addr}:{self.port} with AE Title: {self.ae_title}")
 
         # Start listening for incoming association requests
         ae.start_server((self.addr, self.port),
