@@ -1,24 +1,3 @@
-from django.apps import AppConfig
-import logging
-
-# from .models import DicomServer
-
-logger = logging.getLogger(__name__)
-
-
-class HomeConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'home'
-
-    # custom hook for running code at django start
-    def ready(self):
-        print("Starting DICOM Store SCP server")
-        # dicom_server = DicomServerRunner()
-        # dicom_server.run_server()
-        # logger.info("Starting DICOM Store SCP server")
-        # pynetdicomsrv()
-
-
 class DicomServerRunner:
     def __init__(self, server_name="DICOM C-STORE SCP Server",
                  addr="127.0.0.1", port=11112, ae_title="STORESCP"):
@@ -42,7 +21,7 @@ class DicomServerRunner:
 
         # Start listening for incoming association requests
         ae.start_server((self.addr, self.port),
-                        block=False, evt_handlers=handlers)
+                        block=True, evt_handlers=handlers)
 
         print("DICOM Server has been started!!")
 
@@ -70,3 +49,7 @@ class DicomServerRunner:
 
         # Return a 'Success' status
         return 0x0000
+
+
+server_runner = DicomServerRunner()
+server_runner.run_server()
