@@ -51,5 +51,5 @@ class DicomServerRunner:
         return 0x0000
 
 
-server_runner = DicomServerRunner()
-server_runner.run_server()
+# server_runner = DicomServerRunner()
+# server_runner.run_server()
