@@ -18,12 +18,13 @@ class DicomServer(models.Model):
     ip_address = models.GenericIPAddressField(
         default="127.0.0.1",
         verbose_name="IP Address",
-        help_text="IP Address of DICOM server (default is localhost 127.0.0.1)"
+        help_text="The IP Address that this DICOM server will listen on (default is localhost 127.0.0.1)"
     )
     port = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(65536)],
         default=11112,
-        verbose_name="Port Number"
+        verbose_name="Port Number",
+        help_text="The port number that this DICOM Server will listen on (default is 11112)"
     )
     is_running = models.BooleanField(default=False)
 
