@@ -13,11 +13,18 @@
 </head>
 
 <body>
-  <div class="navbar"></div>
+  <div class="container">
+    <div class="navbar">
+      {% block navbar %}{% endblock %}
+    </div>
 
-  <div class="container content">
-    {% block content %}
-    {% endblock %}
+    <div class="heading">
+      {% block heading %} {% endblock %}
+    </div>
+
+    <div class="content">
+      {% block content %} {% endblock %}
+    </div>
   </div>
 </body>
 
