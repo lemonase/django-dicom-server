@@ -84,7 +84,7 @@ class DicomServerRunner:
         return 0x0000
 
     # handle store testing: output_directory is temporary
-    def handle_store(event, output_directory="~/scp_data/"):
+    def handle_store(self, event, output_directory="output/scp_data/"):
         from pydicom.filewriter import write_file_meta_info
         from pydicom.dataset import Dataset
         from pydicom.uid import DeflatedExplicitVRLittleEndian
