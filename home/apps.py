@@ -36,6 +36,7 @@ class HomeConfig(AppConfig):
 
         run_dicom_servers()
 
+
 class DicomServerRunner:
     def __init__(self, server_name="DICOM C-STORE SCP Server",
                  addr="127.0.0.1", port=11112, ae_title="ANY-SCP", output_directory="djicom_data/output"):
@@ -151,7 +152,9 @@ class DicomServerRunner:
         except KeyError:
             mode_prefix = "UN"
 
-        filename = f"{mode_prefix}.{sop_instance}"
+        filename_ext = "dcm"
+
+        filename = f"{mode_prefix}.{sop_instance}.{filename_ext}"
         logger.info(f"Storing DICOM file: {filename}")
 
         status_ds = Dataset()
