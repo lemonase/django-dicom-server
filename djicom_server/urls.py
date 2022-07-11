@@ -1,4 +1,4 @@
-"""dcm_server URL Configuration
+"""djicom_server URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -19,6 +19,8 @@ from django.urls import path
 from home import views
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.DicomServerListView.as_view()),
+    path('servers/', views.DicomServerListView.as_view()),
+    path('servers/<pk>', views.DicomServerDetailView.as_view()),
     path('admin/', admin.site.urls),
 ]

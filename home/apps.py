@@ -17,22 +17,34 @@ class HomeConfig(AppConfig):
             return
         os.environ["HOME_RUN_ONCE"] = "True"
 
-        print("Starting DICOM Store SCP server")
+        def run_dicom_servers():
+            # FIXME note: this causes problems when migrating db.
+            # just comment out function call to proceed
+            from .models import DicomServer
+            print("Starting DICOM Servers")
+            for server in DicomServer.objects.all():
+                dicom_server = DicomServerRunner(
+                    server_name=server.hostname,
+                    addr=server.ip_address,
+                    port=server.port,
+                    ae_title=server.ae_title,
+                    output_directory=server.output_directory
+                )
+                dicom_server.run_server()
+                server.is_running = True
+                server.save()
 
-        from .models import DicomServer
-        for server in DicomServer.objects.all():
-            dicom_server = DicomServerRunner(
-                server_name=server.hostname, port=server.port, ae_title=server.ae_title)
-            dicom_server.run_server()
+        run_dicom_servers()
 
 
 class DicomServerRunner:
     def __init__(self, server_name="DICOM C-STORE SCP Server",
-                 addr="127.0.0.1", port=11112, ae_title="ANY-SCP"):
+                 addr="127.0.0.1", port=11112, ae_title="ANY-SCP", output_directory="djicom_data/output"):
         self.server_name = server_name
         self.addr = addr
         self.port = port
         self.ae_title = ae_title
+        self.output_directory = output_directory
 
     def run_server(self):
         from pynetdicom._globals import ALL_TRANSFER_SYNTAXES
@@ -81,7 +93,7 @@ class DicomServerRunner:
         return 0x0000
 
     # handle store testing: output_directory is temporary
-    def handle_store(event, output_directory="~/scp_data/"):
+    def handle_store(self, event):
         from pydicom.filewriter import write_file_meta_info
         from pydicom.dataset import Dataset
         from pydicom.uid import DeflatedExplicitVRLittleEndian
@@ -140,20 +152,22 @@ class DicomServerRunner:
         except KeyError:
             mode_prefix = "UN"
 
-        filename = f"{mode_prefix}.{sop_instance}"
+        filename_ext = "dcm"
+
+        filename = f"{mode_prefix}.{sop_instance}.{filename_ext}"
         logger.info(f"Storing DICOM file: {filename}")
 
         status_ds = Dataset()
         status_ds.Status = 0x0000
 
         # Try to save to output-directory
-        if output_directory is not None:
-            filename = os.path.join(output_directory, filename)
+        if self.output_directory is not None:
+            filename = os.path.join(self.output_directory, filename)
             try:
-                os.makedirs(output_directory, exist_ok=True)
+                os.makedirs(self.output_directory, exist_ok=True)
             except Exception as exc:
                 logger.error("Unable to create the output directory:")
-                logger.error(f"    {output_directory}")
+                logger.error(f"    {self.output_directory}")
                 logger.exception(exc)
                 # Failed - Out of Resources - IOError
                 status_ds.Status = 0xA700
