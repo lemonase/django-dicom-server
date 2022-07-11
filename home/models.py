@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+import os
+
 
 class DicomServer(models.Model):
     hostname = models.CharField(
@@ -32,6 +34,9 @@ class DicomServer(models.Model):
         default="djicom_output/output",
         help_text="The output directory where studies will be stored."
     )
+
+    def get_output_files(self):
+        return os.listdir(self.output_directory)
 
     class Meta:
         verbose_name = "DICOM Server"
