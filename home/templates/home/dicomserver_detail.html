@@ -39,12 +39,14 @@
     </tr>
   </thead>
   <tbody>
+    {% if server.get_output_files is not None %}
     {% for file in server.get_output_files %}
     <tr>
       <td>{{ file }}</td>
       <td id="dcm-thumbnail"></td>
     </tr>
     {% endfor %}
+    {% endif %}
   </tbody>
 </table>
 
