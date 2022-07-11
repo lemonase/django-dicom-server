@@ -1,19 +1,12 @@
 {% extends "base.html" %}
-{% block title %} DICOM Server Index {% endblock %}
+{% block title %} DICOM Server Details {% endblock %}
 
 {% block heading %}
-<h1>DJICOM Server Index Page</h1>
+<h1>DJICOM Server Detail Page</h1>
 {% endblock %}
 
 {% block content %}
-<hr>
-<a href="/admin/home/dicomserver">
-  <button class="btn btn-primary">Click Here to Add/Configure DICOM Server Settings</button>
-</a>
-<hr>
-
-<h2> Server List </h2>
-
+<h2>Server Info</h2>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -24,15 +17,28 @@
     </tr>
   </thead>
   <tbody>
-    {% for server in server_list %}
     <tr>
       <td>{{ server.hostname }}</td>
       <td>{{ server.ae_title }}</td>
       <td>{{ server.port }}</td>
       <td>{{ server.is_running}}</td>
     </tr>
-    {% endfor %}
   </tbody>
 </table>
 
+<h2>DICOM Directory: <code>{{ server.output_directory }}</code></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Filename</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in server.get_output_files %}
+    <tr>
+      <td>{{ file }}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
 {% endblock %}

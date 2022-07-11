@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} DICOM Server Index {% endblock %}
+
+{% block heading %}
+<h1>DJICOM Server Index Page</h1>
+{% endblock %}
+
+{% block content %}
+<hr>
+<a href="/admin/home/dicomserver">
+  <button class="btn btn-primary">Click Here to Add/Configure DICOM Server Settings</button>
+</a>
+<hr>
+
+<h2> Server List </h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Hostname</td>
+      <td>AE Title</td>
+      <td>Port Num</td>
+      <td>Is Running?</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for server in server_list %}
+    <tr>
+      <td><a href="/servers/{{server.pk}}">{{ server.hostname }}</a></td>
+      <td>{{ server.ae_title }}</td>
+      <td>{{ server.port }}</td>
+      <td>{{ server.is_running}}</td>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
