@@ -19,6 +19,8 @@ from django.urls import path
 from home import views
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.DicomServerListView.as_view()),
+    path('servers/', views.DicomServerListView.as_view()),
+    path('servers/<pk>', views.DicomServerDetailView.as_view()),
     path('admin/', admin.site.urls),
 ]
