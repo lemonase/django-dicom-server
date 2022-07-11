@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %} DICOM Server Details {% endblock %}
+
+{% block heading %}
+<h1>DJICOM Server Detail Page</h1>
+{% endblock %}
+
+{% block content %}
+<h2>Server Info</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Hostname</td>
+      <td>AE Title</td>
+      <td>Port Num</td>
+      <td>Is Running?</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ server.hostname }}</td>
+      <td>{{ server.ae_title }}</td>
+      <td>{{ server.port }}</td>
+      <td>{{ server.is_running}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>DICOM Directory: <code>{{ server.output_directory }}</code></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Filename</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in server.get_output_files %}
+    <tr>
+      <td>{{ file }}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+{% endblock %}
