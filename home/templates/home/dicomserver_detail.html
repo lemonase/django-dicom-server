@@ -22,11 +22,14 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{ server.hostname }}</td>
+      <td><a href="/servers/{{server.pk}}">{{ server.hostname }}</a></td>
       <td>{{ server.ae_title }}</td>
       <td>{{ server.port }}</td>
-      <td>{{ server.is_running}}</td>
-    </tr>
+      {% if server.is_running %}
+      <td><span class="glyphicon glyphicon-ok"></span></td>
+      {% else %}
+      <td><span class="glyphicon glyphicon-remove"></span></td>
+      {% endif %}
   </tbody>
 </table>
 

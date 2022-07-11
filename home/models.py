@@ -38,6 +38,10 @@ class DicomServer(models.Model):
     def get_output_files(self):
         return os.listdir(self.output_directory)
 
+    def read_file_data(self, filename):
+        with open(filename, "r") as file:
+            return file.read()
+
     class Meta:
         verbose_name = "DICOM Server"
         verbose_name_plural = "DICOM Servers"

@@ -6,6 +6,7 @@ from .models import DicomServer
 
 # Create your views here.
 
+
 class DicomServerListView(ListView):
     model = DicomServer
     context_object_name = 'server_list'
