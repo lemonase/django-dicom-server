@@ -53,6 +53,15 @@
   </tbody>
 </table>
 
+<h2>Image Data</h2>
+<table class="table table-striped">
+  {% for file_data in server.get_dcm_data %}
+  <tr>
+    <td>{{ file_data }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 <script>
   // example from js dwv dicom viewer
   // create the dwv app
