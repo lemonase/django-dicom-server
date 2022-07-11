@@ -36,11 +36,16 @@ class DicomServer(models.Model):
     )
 
     def get_output_files(self):
-        return os.listdir(self.output_directory)
+        files = os.listdir(self.output_directory)
+        return files
 
-    def read_file_data(self, filename):
-        with open(filename, "r") as file:
-            return file.read()
+    def get_dcm_data(self):
+        from pydicom import dcmread
+        files_data = []
+        for file in os.listdir(self.output_directory):
+            files_data += dcmread(os.path.join(self.output_directory, file))
+
+        return files_data
 
     class Meta:
         verbose_name = "DICOM Server"
@@ -48,3 +53,15 @@ class DicomServer(models.Model):
 
     def __str__(self):
         return self.hostname
+
+
+# class SOPInstance(models.Model):
+#     patient_id = models.CharField(
+#         max_length=64
+#     )
+#     study_uid = models.CharField(
+#         max_lenght=64
+#     )
+#     series_uids = models.CharField(
+#         max_length=64
+#     )
