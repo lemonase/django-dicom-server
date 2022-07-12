@@ -18,6 +18,7 @@
     <tr>
       <td>Hostname</td>
       <td>AE Title</td>
+      <td>IP Address</td>
       <td>Port Num</td>
       <td>Is Running?</td>
     </tr>
@@ -27,6 +28,7 @@
     <tr>
       <td><a href="/servers/{{server.pk}}">{{ server.hostname }}</a></td>
       <td>{{ server.ae_title }}</td>
+      <td>{{ server.ip_address }}</td>
       <td>{{ server.port }}</td>
       {% if server.is_running %}
       <td><span class="glyphicon glyphicon-ok"></span></td>
