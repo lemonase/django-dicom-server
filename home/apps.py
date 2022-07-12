@@ -81,14 +81,14 @@ class DicomServerRunner:
         ae.start_server((self.addr, self.port),
                         block=False, evt_handlers=handlers)
 
-    def handle_echo(event):
-        # requestor = event.assoc.requestor
-        # timestamp = event.timestamp.strftime("%Y-%m-%d %H:%M:%S")
-        # msg = (
-        #     "Received C-ECHO service request from ({}, {}) at {}"
-        #     .format(requestor.address, requestor.port, timestamp)
-        # )
-        # logger.info(msg)
+    def handle_echo(self, event):
+        requestor = event.assoc.requestor
+        timestamp = event.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        msg = (
+            "Received C-ECHO service request from ({}, {}) at {}"
+            .format(requestor.address, requestor.port, timestamp)
+        )
+        logger.info(msg)
 
         return 0x0000
 
