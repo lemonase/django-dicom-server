@@ -18,9 +18,9 @@ class DicomServer(models.Model):
         help_text="An AE Title for the DICOM server. The default is ANY-SCP."
     )
     ip_address = models.GenericIPAddressField(
-        default="127.0.0.1",
+        default="0.0.0.0",
         verbose_name="IP Address",
-        help_text="The IP Address that this DICOM server will listen on (default is localhost 127.0.0.1)."
+        help_text="The IP Address that this DICOM server will listen on (default is 0.0.0.0 to listen externally on all IP Addresses)."
     )
     port = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(65536)],
@@ -55,13 +55,13 @@ class DicomServer(models.Model):
         return self.hostname
 
 
-# class SOPInstance(models.Model):
-#     patient_id = models.CharField(
-#         max_length=64
-#     )
-#     study_uid = models.CharField(
-#         max_lenght=64
-#     )
-#     series_uids = models.CharField(
-#         max_length=64
-#     )
+class SOPInstance(models.Model):
+    patient_id = models.CharField(
+        max_length=64
+    )
+    study_uid = models.CharField(
+        max_length=64
+    )
+    series_uids = models.CharField(
+        max_length=64
+    )
