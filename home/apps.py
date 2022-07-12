@@ -34,7 +34,10 @@ class HomeConfig(AppConfig):
                 server.is_running = True
                 server.save()
 
-        run_dicom_servers()
+        try:
+            run_dicom_servers()
+        except:
+            pass
 
 
 class DicomServerRunner:
